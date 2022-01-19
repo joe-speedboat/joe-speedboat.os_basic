@@ -1,0 +1,158 @@
+---
+- name: include global vars file if present
+  import_tasks: include-vars.yml
+
+- name: base packages installation
+  include_tasks: '{{ base_packages_host }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution }}-{{ ansible_distribution_version }}/base_packages.yml'
+        - '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}/base_packages.yml'
+        - '{{ ansible_distribution }}/base_packages.yml'
+        - '{{ ansible_os_family }}/base_packages.yml'
+        - 'base_packages.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: base_packages_host
+  tags: [base]
+
+- name: epel repo installation
+  include_tasks: '{{ epel_repo_host }}'
+  with_first_found:
+    - files:
+        - 'epel_repo-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'epel_repo-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'epel_repo-{{ ansible_distribution }}.yml'
+        - 'epel_repo-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: epel_repo_host
+  tags: [cleanup]
+  when: epel_repo == true
+
+- name: package cleanup tasks
+  include_tasks: '{{ software_cleanup_host }}'
+  with_first_found:
+    - files:
+        - 'software_cleanup-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'software_cleanup-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'software_cleanup-{{ ansible_distribution }}.yml'
+        - 'software_cleanup-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: software_cleanup_host
+  tags: [cleanup]
+  when: package_cleanup == true
+
+- name: os update
+  include_tasks: '{{ os_update_host }}'
+  with_first_found:
+    - files:
+        - 'os_update-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'os_update-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'os_update-{{ ansible_distribution }}.yml'
+        - 'os_update-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: os_update_host
+  tags: [update]
+  when: os_update == true
+
+- name: oom handler
+  include_tasks: '{{ oom_handler_host }}'
+  with_first_found:
+    - files:
+        - 'oom-handler-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'oom-handler-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'oom-handler-{{ ansible_distribution }}.yml'
+        - 'oom-handler-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: oom_handler_host
+  tags: [oom-handler]
+  when: setup_oom_handler == true
+
+- name: mail configuration
+  include_tasks: '{{ mail_host }}'
+  with_first_found:
+    - files:
+        - 'mail-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'mail-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'mail-{{ ansible_distribution }}.yml'
+        - 'mail-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: mail_host
+  tags: [mail]
+  when: setup_mail == true
+
+- name: rsyslogd configuration
+  include_tasks: '{{ rsyslog_host }}'
+  with_first_found:
+    - files:
+        - 'rsyslog-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'rsyslog-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'rsyslog-{{ ansible_distribution }}.yml'
+        - 'rsyslog-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: rsyslog_host
+  tags: [rsyslog]
+  when: setup_syslog_forwarding == true
+
+- name: snmpd configuration
+  include_tasks: '{{ snmpd_host }}'
+  with_first_found:
+    - files:
+        - 'snmpd-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'snmpd-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'snmpd-{{ ansible_distribution }}.yml'
+        - 'snmpd-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: snmpd_host
+  tags: [snmpd]
+  when: setup_snmpd == true
+
+- name: selinux configuration
+  include_tasks: '{{ selinux_host }}'
+  with_first_found:
+    - files:
+        - 'selinux-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'selinux-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'selinux-{{ ansible_distribution }}.yml'
+        - 'selinux-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: selinux_host
+  tags: [selinux]
+  when: setup_selinux == true and ansible_virtualization_type != "docker"
+
+- name: firewalld configuration
+  include_tasks: '{{ firewalld_host }}'
+  with_first_found:
+    - files:
+        - 'firewalld-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'firewalld-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'firewalld-{{ ansible_distribution }}.yml'
+        - 'firewalld-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: firewalld_host
+  tags: [firewalld]
+  when: (setup_firewalld == true) and (setup_iptables == false) and ansible_virtualization_type != "docker"
+
+- name: iptables configuration
+  include_tasks: '{{ iptables_host }}'
+  with_first_found:
+    - files:
+        - 'iptables-{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+        - 'iptables-{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml'
+        - 'iptables-{{ ansible_distribution }}.yml'
+        - 'iptables-{{ ansible_os_family }}.yml'
+      errors: 'ignore'
+  loop_control:
+    loop_var: iptables_host
+  tags: [iptables]
+  when: (setup_iptables == true) and (setup_firewalld == false) and ansible_virtualization_type != "docker"
+...

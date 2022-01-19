@@ -1,0 +1,25 @@
+---
+- name: install packages for mail setup
+  yum:
+    name: '{{ item.package }}'
+    state: present
+  with_items: "{{ os_mail_soft_cos7 }}"
+- name: enable postfix
+  service:
+    name: postfix
+    enabled: yes
+- name: create main.cf
+  template:
+    src: main.cf.j2
+    dest: /etc/postfix/main.cf
+- name: create canonical map
+  template:
+    src: canonical.j2
+    dest: /etc/postfix/canonical
+  notify: newcanonical
+- name: create aliases
+  template:
+    src: aliases.j2
+    dest: /etc/aliases
+  notify: newaliases
+...

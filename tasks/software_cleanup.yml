@@ -1,0 +1,4 @@
+---
+- name: remove old kernel packages for RPM based systems
+  shell:  package-cleanup -y --oldkernels --count='{{ package_cleanup_keep_old_kernels }}'
+...

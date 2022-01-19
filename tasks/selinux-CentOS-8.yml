@@ -1,0 +1,11 @@
+---
+- name: install packages for maintaining selinux
+  dnf:
+    name: '{{ item.package }}'
+    state: present
+  with_items: '{{ os_selinux_soft_cos8 }}'
+- name: configure selinux policy to {{ selinux_policy_cos8 }}
+  selinux:
+    policy: targeted
+    state: '{{ selinux_policy }}'
+...

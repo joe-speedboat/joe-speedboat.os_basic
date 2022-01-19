@@ -1,0 +1,16 @@
+---
+- name: install packages for mail setup
+  yum:
+    name: '{{ item.package }}'
+    state: present
+  with_items: "{{ os_snmpd_soft_cos7 }}"
+- name: enable snmpd
+  service:
+    name: snmpd
+    enabled: yes
+- name: create snmpd.conf
+  template:
+    src: snmpd.conf.j2
+    dest: /etc/snmp/snmpd.conf
+  notify: restart snmpd
+...

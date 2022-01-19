@@ -1,0 +1,7 @@
+---
+- name: install epel repo packages
+  yum:
+    name: '{{ item.package }}'
+    state: present
+  with_items: "{{ os_epel_repo_packages_cos7 }}"
+...

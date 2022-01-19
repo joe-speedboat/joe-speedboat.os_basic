@@ -1,0 +1,32 @@
+---
+- name: Example
+  hosts: virt1.lb.bitbull.ch
+  roles:
+    - role: joe-speedboat.os_basic
+   vars:
+
+package_cleanup: true
+package_cleanup_keep_old_kernels: 1
+
+os_update: false
+setup_oom_handler: false
+setup_mail: false
+setup_syslog_forwarding: true
+syslog_remote_host: '@graylog.office.bitbull.ch:514'
+
+# setup snmpd config [true|false]
+setup_snmpd: true
+monitoring_host_ip: ''
+snmp_community_name: 'MyCommunity'
+
+# setup selinux: [disabled|permissive|enforcing] [true|false]
+setup_selinux: false
+selinux_policy: enforcing
+
+# setup and enable firewalld: [true|false]
+setup_firewalld: true
+
+# setup and enable iptables: [true|false]
+setup_iptables: false
+
+...

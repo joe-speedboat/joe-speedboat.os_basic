@@ -1,0 +1,21 @@
+---
+- name: remove firewalld packages
+  yum:
+    name: '{{ item.package }}'
+    state: absent
+  with_items: '{{ os_firewalld_soft }}'
+- name: install iptables packages
+  yum:
+    name: '{{ item.package }}'
+    state: present
+  with_items: '{{ os_iptables_soft }}'
+- name: copy iptables config file
+  template:
+    src: iptables.j2
+    dest: /etc/sysconfig/iptables
+- name: enable and restart iptables
+  service:
+    name: iptables
+    enabled: yes
+  notify: restart iptables
+...

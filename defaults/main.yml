@@ -1,0 +1,39 @@
+---
+# epel repo installation
+epel_repo: false
+
+# remove obsolte kernels: [true|false]
+package_cleanup: true
+package_cleanup_keep_old_kernels: 1
+
+# OS upgrade [none|security|all]:
+os_update: true
+package_upgrade: security
+
+# reboot and alert on out of memory events: [true|false]
+setup_oom_handler: true
+
+# setup mail config: [true|false]
+setup_mail: false
+sysadmin_email: 'support@domain.ch'
+mail_relay_host: 'mail.domain.ch'
+mail_local_sender_domain: 'domain.ch'
+
+# setup rsyslog config -> @=udp / @@=tcp: [true|false]
+setup_syslog_forwarding: false
+syslog_remote_host: '@syslog.domain.local:514'
+
+# setup snmpd config [true|false]
+setup_snmpd: false
+monitoring_host_ip: '192.168.1.10'
+snmp_community_name: 'MyCommunity'
+
+# setup selinux: [disabled|permissive|enforcing] [true|false]
+setup_selinux: false
+selinux_policy: enforcing
+
+# setup and enable firewalld: [true|false]
+setup_firewalld: true
+
+# setup and enable iptables: [true|false]
+setup_iptables: false

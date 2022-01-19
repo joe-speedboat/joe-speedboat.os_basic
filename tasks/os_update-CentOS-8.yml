@@ -1,0 +1,19 @@
+---
+- block:
+  - name: install security patches with yum
+    dnf:
+      name: '*'
+      state: latest
+      security: yes
+  - name: install all kernel updates with yum
+    dnf:
+      name: 'kernel*'
+      state: latest
+  when: package_upgrade == 'security'
+
+- block:
+  - name: install all updates with yum
+    dnf:
+      name: '*'
+      state: latest
+  when: package_upgrade == 'all'

@@ -1,0 +1,7 @@
+---
+- name: install base packages
+  yum:
+    name: '{{ item.package }}'
+    state: present
+  with_items: "{{ os_base_packages_cos7 }}"
+...

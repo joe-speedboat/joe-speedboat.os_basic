@@ -1,0 +1,23 @@
+---
+- name: remove iptables packages
+  yum:
+    name: '{{ item.package }}'
+    state: absent
+  with_items: '{{ os_iptables_soft }}'
+- name: install firewalld packages
+  yum:
+    name: '{{ item.package }}'
+    state: present
+  with_items: '{{ os_firewalld_soft }}'
+  register: firewalld_installed
+- name: start firewalld
+  service:
+    name: firewalld
+    state: restarted
+  when: firewalld_installed.changed
+- name: enable and restart firewalld
+  service:
+    name: firewalld
+    enabled: yes
+  notify: restart firewalld
+...

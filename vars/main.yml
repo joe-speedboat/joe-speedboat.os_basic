@@ -1,0 +1,96 @@
+---
+os_base_packages_cos7:
+  - { package: "strace" }
+  - { package: "ltrace" }
+  - { package: "dstat" }
+  - { package: "bind-utils" }
+  - { package: "screen" }
+  - { package: "tar" }
+  - { package: "zip" }
+  - { package: "unzip" }
+  - { package: "gzip" }
+  - { package: "xz" }
+  - { package: "yum-utils" }
+  - { package: "sysstat" }
+  - { package: "sos" }
+  - { package: "NetworkManager-glib" }
+  - { package: "nm-connection-editor" }
+  - { package: "wget" }
+  - { package: "vim-enhanced" }
+  - { package: "mailx" }
+  - { package: "python-netaddr" }
+  - { package: "lsof" }
+  - { package: "rsync" }
+
+os_base_packages_cos8:
+  - { package: "strace" }
+  - { package: "ltrace" }
+  - { package: "dstat" }
+  - { package: "bind-utils" }
+  - { package: "tmux" }
+  - { package: "tar" }
+  - { package: "zip" }
+  - { package: "unzip" }
+  - { package: "gzip" }
+  - { package: "xz" }
+  - { package: "dnf-utils" }
+  - { package: "sysstat" }
+  - { package: "sos" }
+  - { package: "nm-connection-editor" }
+  - { package: "wget" }
+  - { package: "vim-enhanced" }
+  - { package: "mailx" }
+  - { package: "python3-netaddr" }
+  - { package: "lsof" }
+  - { package: "rsync" }
+
+os_mail_soft_cos7:
+  - { package: "mailx" }
+  - { package: "postfix" }
+
+os_mail_soft_cos8:
+  - { package: "mailx" }
+  - { package: "postfix" }
+
+os_epel_repo_packages_cos7:
+  - { package: "epel-release" }
+
+os_epel_repo_packages_cos8:
+  - { package: "epel-release" }
+
+os_rsyslog_soft_cos7:
+  - { package: "rsyslog" }
+
+os_rsyslog_soft_cos8:
+  - { package: "rsyslog" }
+
+os_snmpd_soft_cos7:
+  - { package: "net-snmp" }
+
+os_snmpd_soft_cos8:
+  - { package: "net-snmp" }
+
+os_selinux_soft_cos7:
+  - { package: "setroubleshoot-server" }
+
+os_selinux_soft_cos8:
+  - { package: "setroubleshoot-server" }
+
+os_firewalld_soft_cos7:
+  - { package: "firewalld" }
+  - { package: "firewalld-filesystem" }
+  - { package: "python-firewall" }
+
+os_firewalld_soft_cos8:
+  - { package: "firewalld" }
+  - { package: "firewalld-filesystem" }
+  - { package: "python3-firewall" }
+
+os_iptables_soft_cos7:
+  - { package: "iptables-services" }
+  - { package: "iptables-utils" }
+
+os_iptables_soft_cos8:
+  - { package: "iptables-services" }
+  - { package: "iptables-utils" }
+...

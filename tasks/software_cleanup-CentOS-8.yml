@@ -1,0 +1,6 @@
+---
+- name: remove old kernel packages for RPM based systems
+  shell:  dnf -y remove $(dnf repoquery --installonly --latest-limit '{{ package_cleanup_keep_old_kernels }}' -q | grep -v $(uname -r))
+  args:
+    warn: false
+...
